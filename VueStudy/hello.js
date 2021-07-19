@@ -1,5 +1,5 @@
 let app = new Vue({
-    el:'#app',
+    el: '#app',
     data:{
         user:null,
         comment:null,
@@ -12,7 +12,7 @@ let app = new Vue({
                 comment:this.comment
             };
 
-            this.message.unshift
+            this.messages.unshift(message)  //제일 앞에꺼를 사용
             this.user=null
             this.comment=null
         }
