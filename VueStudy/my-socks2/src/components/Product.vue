@@ -1,27 +1,28 @@
 <template>
     <div class="product">
         <div class="product-image">
-            <img :src="image" />
+            <img v-bind:src="image">
         </div>
 
-    <div class="product-info">
-        <h1>{{ product }}</h1>
-        <p v-if="inStock">In Stock</p>
-        <p v-else>Out of Stock</p>
-        <ul>
-            <li v-for="(detail, i) in details" :key="i">{{ detail }}</li>
-        </ul>
-        <div v-for="(variant, index) in variants" :key="variant.variantId" class="color-box" :style="{backgroundColor: variant.variantColor}" @mouseover="updateProduct(index)">
-        </div>
+        <div class="product-info">
+            <h1>{{ title }}</h1>
+            <p v-if="inStock">In Stock</p>
+            <p v-else>Out of Stock</p>
+            <ul>
+                <li v-for="(detail, i) in details" :key="i">{{ detail }}</li>
+            </ul>
+            <div v-for="(variant, index) in variants" :key="variant.variantId" class="color-box" :style="{backgroundColor: variant.variantColor}" @mouseover="updateProduct(index)">
+                <p @mouseover="updateProduct(index)">{{ variant.variantColor }}</p>
+            </div>
 
-        <button v-on:click="addToCart" :disabled="!inStock" :class="{disabledButton:!inStock}">Add to Cart</button>
-        
+            <button v-on:click="addToCart" :disabled="!inStock" :class="{disabledButton:!inStock}">Add to Cart</button>
+            
+        </div>
     </div>
-</div>
 </template>
 
 <script>
-export default{
+export default {
     data(){
         return{
             product:'Socks',
@@ -40,15 +41,16 @@ export default{
                 {
                     variantId:2235,
                     variantColor:'blue',
-                    variantImage:require('../assets/images/socks_blue.jpg'),
+                    variantImage:require('@/assets/images/socks_blue.jpg'),
                     variantQuantity:0
                 }
             ],
+            cart:0
         }
     },
     methods:{
         addToCart(){
-            this.$emit('add-to-cart')
+            this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId)
         },
         updateProduct(index){
             this.selectedVariant = index
@@ -65,7 +67,6 @@ export default{
             return this.variants[this.selectedVariant].variantQuantity
         }
     }
-};
+}
 </script>
-
 
