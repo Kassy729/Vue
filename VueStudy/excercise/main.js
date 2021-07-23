@@ -41,7 +41,6 @@ Vue.component('product', {
                     variantQuantity:0
                 }
             ],
-            cart:0
         }
     },
     methods:{

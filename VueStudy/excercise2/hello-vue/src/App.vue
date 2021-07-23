@@ -16,6 +16,8 @@ export default {
 }
 </script>
 
+
+
 <style scoped>
 *, *::befor, *::after{
   box-sizing: border-box;
