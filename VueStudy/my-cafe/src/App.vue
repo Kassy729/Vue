@@ -5,16 +5,20 @@
       <li><router-link to="/menus">Menus</router-link></li>
       <li><router-link to="/events">Events</router-link></li>
       <li><router-link to="/reviews">Reviews</router-link></li>
+      <li><router-link to="/hi">Hi</router-link></li>
     </ul>
-    <router-view/>
+    <router-view></router-view>
   </div>
 </template>
 
+
+
 <script>
 export default {
-  name: 'App',
+  name:'App'
 }
 </script>
+
 
 
 <style>
