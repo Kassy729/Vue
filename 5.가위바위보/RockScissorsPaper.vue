@@ -27,7 +27,9 @@
       return v[1] === imgCoord;
     })[0];
   };
+
   let interval = null;
+  
   export default {
     data() {
       return {
@@ -44,7 +46,7 @@
       }
     },
     methods: {
-      changeHand() {
+      changeHand() {  
         interval = setInterval(() => {
           if (this.imgCoord === rspCoords.바위) {
             this.imgCoord = rspCoords.가위;
