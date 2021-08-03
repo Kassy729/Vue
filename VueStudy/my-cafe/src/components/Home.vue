@@ -1,14 +1,29 @@
 <template>
     <div id="app">
         <h1>Welcome {{ userId }}</h1>
-        <input v-model="newId" type="text"><button @click="saveUserId">Save</button><br>
+        <v-text-field v-model="newId" type="text"></v-text-field><v-btn rounded
+            color="primary"
+            dark @click="saveUserId">Save</v-btn><br>
+
         <button @click="updateReviews">Update</button>
         <h1>{{ reviewCount }}</h1>
-        <ul>
-            <li v-for="r in reviews" :key="r.id">
-                <p>{{ r.body }}</p>
-            </li>
-        </ul>
+        <v-simple-table>
+            <template v-slot:default>
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in reviews" :key="item">
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.body }}</td>
+                    </tr>
+                </tbody>
+            </template>
+        </v-simple-table>
+        
     </div>
 </template>
 
@@ -40,3 +55,7 @@ export default {
     }
 };
 </script>
+
+<style>
+
+</style>
