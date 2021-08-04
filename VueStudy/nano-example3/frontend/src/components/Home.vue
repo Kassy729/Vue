@@ -2,15 +2,15 @@
     <div>
         <p>{{err_msg}}</p>
         <v-container fluid>
-            <v-data-iterator :items="books" hide-default-footer hide-default-header>
+            <v-data-iterator :items="books">
                 <template v-slot:default="books">
                     <v-row>
                         <v-col v-for="book in books.items" :key="book.bookId" cols="4">
-                            <v-card >
-                                <v-img max-height="150" contain :src="book.cover"/>  
+                            <v-card>
+                                <v-img max-height="150" contain :src="book.cover"></v-img>
                                 <v-divider></v-divider>
                                 <v-card-title>
-                                    <router-link :to="'/books/'+book.bookId">{{book.title}}</router-link>
+                                    <router-link :to="'/books/'+book.bookId">{{ book.title }}</router-link>
                                 </v-card-title>
                                 <v-card-subtitle>{{book.author}}</v-card-subtitle>
                             </v-card>
@@ -21,6 +21,7 @@
         </v-container>
     </div>
 </template>
+
 <script>
 import axios from 'axios'
 export default {
@@ -31,7 +32,7 @@ export default {
             err_msg:''
         }
     },
-    mounted(){
+    mounted() {
         axios.get('/api/books')
         .then(response=>{
             console.log(response.data)
@@ -40,6 +41,6 @@ export default {
         .catch(err=>{
             this.err_msg = err.err_msg
         })
-    }
+    },
 }
 </script>
