@@ -10,17 +10,17 @@ export default new Vuex.Store({
         reviews:[]
     },
     mutations:{
-        updateUserId(state, newId) {
+        updateUserId(state, newId){
             state.userId = newId;
         },
         updateReviews(state, reviews){
-            state.reviews = reviews
+            state.reviews = reviews;
         }
     },
     actions:{
-        getReviews({commit}){
+        getReviews({commit}){  //commit의 의미는?? 
             axios.get('/api/comments')
-            .then(response=>{
+            .then(response => {
                 commit('updateReviews', response.data)
             })
             .catch(err => {
@@ -29,10 +29,9 @@ export default new Vuex.Store({
         }
     },
     getters:{
-        reviewCount(state /* , getters */){
+        reviewCount(state){
             return state.reviews.length
         }
     }
 });
-
 
