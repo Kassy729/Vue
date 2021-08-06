@@ -2,11 +2,11 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Home from '@/components/Home.vue'
-import Menus from '@/component/Menus.vue'
+import Menus from '@/components/Menus.vue'
 import Events from '@/components/Events.vue'
-import Reviews from '@/component/Reviews.vue'
+import Reviews from '@/components/Reviews.vue'
 
-Vue.vue(VueRouter)
+Vue.use(VueRouter)
 
 export default new VueRouter({
     mode:'history',
