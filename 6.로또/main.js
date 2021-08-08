@@ -1,4 +1,6 @@
 import Vue from 'vue';
-import RockScissorsPaper from './RockScissorsPaper';
+import LottoGenerator from './LottoGenerator';
 
-new Vue(RockScissorsPaper).$mount('#root');
+new Vue({
+  render: createElement => createElement(LottoGenerator)
+}).$mount('#root');
