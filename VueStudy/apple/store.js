@@ -19,7 +19,7 @@ export const CODE = {
   QUESTION_MINE: -4,
   FLAG_MINE: -5,
   CLICKED_MINE: -6,
-  OPENED: 0, // 0 이상이면 다 opened
+  OPENED: 0,
 };
 
 const plantMine = (row, cell, mine) => {
@@ -27,16 +27,17 @@ const plantMine = (row, cell, mine) => {
   const candidate = Array(row * cell).fill().map((arr, i) => {
     return i;
   });
+
   const shuffle = [];
-  while (candidate.length > row * cell - mine) {
+  while(candidate.length > row * cell - mine){
     const chosen = candidate.splice(Math.floor(Math.random() * candidate.length), 1)[0];
     shuffle.push(chosen);
   }
   const data = [];
-  for (let i = 0; i < row; i++) {
+  for(let i = 0; i < row; i++){
     const rowData = [];
     data.push(rowData);
-    for (let j = 0; j < cell; j++) {
+    for(let j = 0; j < cell; j++){
       rowData.push(CODE.NORMAL);
     }
   }
@@ -51,24 +52,24 @@ const plantMine = (row, cell, mine) => {
   return data;
 };
 
-export default new Vuex.Store({ // import store from './store';
-  state: {
-    tableData: [],
-    data: {
-      row: 0,
-      cell: 0,
-      mine: 0,
+export default new Vuex.Store({
+  state:{
+    tableData:[],
+    data:{
+      row:0,
+      cell:0,
+      mine:0,
     },
     timer: 0,
-    halted: true, // 중단된
-    result: '',
+    halted: true,
+    result : '',
     openedCount: 0,
-  }, // vue의 data와 비슷
-  getters: {
+  },
+  getters:{
 
-  }, // vue의 computed와 비슷
-  mutations: {
-    [START_GAME](state, { row, cell, mine }) {
+  },
+  mutations:{
+    [START_GAME](state, {row, cell, mine}){
       state.data = {
         row,
         cell,
@@ -80,25 +81,24 @@ export default new Vuex.Store({ // import store from './store';
       state.openedCount = 0;
       state.result = '';
     },
-    [OPEN_CELL](state, { row, cell }) {
+    [OPEN_CELL](state, {row, cell}){
       let openedCount = 0;
       const checked = [];
       function checkAround(row, cell) { // 주변 8칸 지뢰인지 검색
-        
-        //undefind인지 검사
         const checkRowOrCellIsUndefined = row < 0 || row >= state.tableData.length || cell < 0 || cell >= state.tableData[0].length;
         if (checkRowOrCellIsUndefined) {
           return;
-        }
+        }  //undefind인지 검사
 
-        //이미 열어본 칸이나 마인이나 깃발이면 검사 하지 않고 return
         if ([CODE.OPENED, CODE.FLAG, CODE.FLAG_MINE, CODE.QUESTION_MINE, CODE.QUESTION].includes(state.tableData[row][cell])) {
           return;
-        }
-        if (checked.includes(row + '/' + cell)) {
+        } //주변칸이 지뢰거나 이미 열었거나 하면 검사 하지않고 return
+
+
+        if (checked.includes(row + '/' + cell)) {  //한번 check한 칸은 검사하지 않기
           return;
         } else {
-          checked.push(row + '/' + cell);
+          checked.push(row + '/' + cell);  //열지 않은 칸이면 검사하고 다음번에는 다시 검사 하지 않도록 checked 
         }
         let around = [];
         if (state.tableData[row - 1]) {
@@ -114,7 +114,7 @@ export default new Vuex.Store({ // import store from './store';
             state.tableData[row + 1][cell - 1], state.tableData[row + 1][cell], state.tableData[row + 1][cell + 1]
           ]);
         }
-        const counted = around.filter(function(v) {
+        const counted = around.filter(function(v) {  //주변 8칸 검사
           return [CODE.MINE, CODE.FLAG_MINE, CODE.QUESTION_MINE].includes(v);
         });
         if (counted.length === 0 && row > -1) { // 주변칸에 지뢰가 하나도 없으면
@@ -153,14 +153,14 @@ export default new Vuex.Store({ // import store from './store';
       state.halted = halted;
       state.result = result;
     },
-    [CLICK_MINE](state, { row, cell }) {
+    [CLICK_MINE](state, {row, cell}){
       state.halted = true;
       Vue.set(state.tableData[row], cell, CODE.CLICKED_MINE);
     },
-    [FLAG_CELL](state, { row, cell }) {
-      if (state.tableData[row][cell] === CODE.MINE) {
+    [FLAG_CELL](state, {row, cell}){
+      if(state.tableData[row][cell] === CODE.MINE){
         Vue.set(state.tableData[row], cell, CODE.FLAG_MINE);
-      } else {
+      }else{
         Vue.set(state.tableData[row], cell, CODE.FLAG);
       }
     },
@@ -171,15 +171,15 @@ export default new Vuex.Store({ // import store from './store';
         Vue.set(state.tableData[row], cell, CODE.QUESTION);
       }
     },
-    [NORMALIZE_CELL](state, { row, cell }) {
-      if (state.tableData[row][cell] === CODE.QUESTION_MINE) {
+    [NORMALIZE_CELL](state, {row, cell}){
+      if(state.tableData[row][cell] === CODE.QUESTION_MINE){
         Vue.set(state.tableData[row], cell, CODE.MINE);
-      } else {
+      }else{
         Vue.set(state.tableData[row], cell, CODE.NORMAL);
       }
     },
-    [INCREMENT_TIMER](state) {
+    [INCREMENT_TIMER](state){
       state.timer += 1;
     },
-  }, // state를 수정할 때 사용해요. 동기적으로
+  },
 });
