@@ -29,4 +29,9 @@ export default new Vuex.Store({
         });
     },
   },
+  getters: {
+    reviewCount(state) {
+      return state.reviews.length;
+    },
+  },
 });
